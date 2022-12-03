@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace B2CWebsite.Migrations
 {
     [DbContext(typeof(DrugStoreContext))]
-    [Migration("20221201060956_Init")]
+    [Migration("20221203031308_Init")]
     partial class Init
     {
         /// <inheritdoc />

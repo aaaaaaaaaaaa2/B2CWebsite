@@ -32,7 +32,7 @@ public partial class DrugStoreContext : DbContext
     public virtual DbSet<TransactStatus> TransactStatuses { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Data Source=MY-ONLY-REASON\\SQLEXPRESS;Initial Catalog=DrugStore;Integrated Security=True;");
+        => optionsBuilder.UseSqlServer("Data Source=MY-ONLY-REASON\\SQLEXPRESS;Initial Catalog=DrugStore;Integrated Security=False;TrustServerCertificate=True;");
 //TrustServerCertificate=True
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
