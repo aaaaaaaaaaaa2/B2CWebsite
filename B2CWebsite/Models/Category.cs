@@ -8,7 +8,6 @@ public partial class Category
 
     public string? Description { get; set; }
 
-    public int? ParentId { get; set; }
 
     public int? Levels { get; set; }
 
