@@ -10,10 +10,18 @@
         <div class="col-lg-6 text-center text-lg-right">
             <div class="d-inline-flex align-items-center">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
+                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>                  
                     <div class="dropdown-menu dropdown-menu-right">
-                        <button class="dropdown-item" type="button">Sign in</button>
-                        <button class="dropdown-item" type="button">Sign up</button>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a class="dropdown-item" type="button" href="/MyAccount.html">My Account</a>
+                            <a class="dropdown-item" href="dang-xuat.html">Đăng xuất</a>
+                        }
+                        else
+                        {
+                            <a class="dropdown-item" type="button" asp-controller="Account" asp-action="Login">Sign in</a>
+                            <a class="dropdown-item" type="button"href="/register.html">Sign up</a>
+                        }
                     </div>
                 </div>
             </div>

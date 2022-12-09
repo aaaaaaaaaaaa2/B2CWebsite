@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,19 @@ builder.Services.AddNotyf(config =>
     config.IsDismissable = true;
     config.Position = NotyfPosition.TopRight;
 });
+builder.Services.AddSession();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(p =>
+    {
+        //p.Cookie.Name = "UserLoginCookie";
+        //p.ExpireTimeSpan = TimeSpan.FromDays(1);
+        p.LoginPath = "/login.html";
+        //p.LogoutPath = "/dang-xuat/html";
+        p.AccessDeniedPath = "/not-found.html";
+    });
+
+
+
 var stringConnectdb = builder.Configuration.GetConnectionString("dbB2CWebsite");
 builder.Services.AddDbContext<DrugStoreContext>(option => option.UseSqlServer(stringConnectdb));
 builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
@@ -38,9 +52,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {

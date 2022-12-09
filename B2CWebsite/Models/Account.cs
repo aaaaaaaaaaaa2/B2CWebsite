@@ -1,4 +1,7 @@
-﻿namespace B2CWebsite.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace B2CWebsite.Models;
 
 public partial class Account
 {
@@ -10,11 +13,13 @@ public partial class Account
 
     public string? Password { get; set; }
 
-    public bool? Active { get; set; }
-
+    public bool Active { get; set; }
+    public int CustomerID { get; set; }
     public string? FullName { get; set; }
 
     public int? RoleId { get; set; }
+
+    public virtual Customer? Customer { get; set; }
 
     public virtual Role? Role { get; set; }
 }

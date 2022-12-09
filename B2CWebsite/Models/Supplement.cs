@@ -1,4 +1,10 @@
-﻿namespace B2CWebsite.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace B2CWebsite.Models;
 
 public partial class Supplement
 {
@@ -9,8 +15,6 @@ public partial class Supplement
     public string? Slink { get; set; }
 
     public int? ManuId { get; set; }
-
-    public string? Thumb { get; set; }
 
     public int? CatId { get; set; }
 
@@ -26,17 +30,14 @@ public partial class Supplement
 
     public string? InactiveIngredient { get; set; }
 
-    public bool? BestSeller { get; set; }
-
-    public bool? HomeFlag { get; set; }
-
-    public bool? Active { get; set; }
+    public int? Price { get; set; }
+    [NotMapped]
+    [DisplayName("Upload File")]
+    public IFormFile? Image { get; set; }
 
     public virtual Category? Cat { get; set; }
 
     public virtual Manufacturer? Manu { get; set; }
 
     public virtual ICollection<OrderDetail> OrderDetails { get; } = new List<OrderDetail>();
-
-    public virtual ICollection<Price> Prices { get; } = new List<Price>();
 }

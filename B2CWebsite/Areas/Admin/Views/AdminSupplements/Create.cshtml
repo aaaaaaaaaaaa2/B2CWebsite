@@ -1,0 +1,84 @@
+﻿@model B2CWebsite.Models.Supplement
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Supplement</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Sid" class="control-label"></label>
+                <input asp-for="Sid" class="form-control" />
+                <span asp-validation-for="Sid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sname" class="control-label"></label>
+                <input asp-for="Sname" class="form-control" />
+                <span asp-validation-for="Sname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image"  class="form-control" accept="image/*" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManuId" class="control-label"></label>
+                <select asp-for="ManuId" class ="form-control" asp-items="ViewBag.ManuId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="CatId" class="control-label"></label>
+                <select asp-for="CatId" class ="form-control" asp-items="ViewBag.CatId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Uses" class="control-label"></label>
+                <input asp-for="Uses" class="form-control" />
+                <span asp-validation-for="Uses" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ingredient" class="control-label"></label>
+                <input asp-for="Ingredient" class="form-control" />
+                <span asp-validation-for="Ingredient" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Directions" class="control-label"></label>
+                <input asp-for="Directions" class="form-control" />
+                <span asp-validation-for="Directions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Warnings" class="control-label"></label>
+                <input asp-for="Warnings" class="form-control" />
+                <span asp-validation-for="Warnings" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OtherInfo" class="control-label"></label>
+                <input asp-for="OtherInfo" class="form-control" />
+                <span asp-validation-for="OtherInfo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InactiveIngredient" class="control-label"></label>
+                <input asp-for="InactiveIngredient" class="form-control" />
+                <span asp-validation-for="InactiveIngredient" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -1,0 +1,52 @@
+﻿@model B2CWebsite.Models.Manufacturer
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Manufacturer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ManuId" />
+            <div class="form-group">
+                <label asp-for="ManuName" class="control-label"></label>
+                <input asp-for="ManuName" class="form-control" />
+                <span asp-validation-for="ManuName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManuAddress" class="control-label"></label>
+                <input asp-for="ManuAddress" class="form-control" />
+                <span asp-validation-for="ManuAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManuPhone" class="control-label"></label>
+                <input asp-for="ManuPhone" class="form-control" />
+                <span asp-validation-for="ManuPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManuEmail" class="control-label"></label>
+                <input asp-for="ManuEmail" class="form-control" />
+                <span asp-validation-for="ManuEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManuCountry" class="control-label"></label>
+                <input asp-for="ManuCountry" class="form-control" />
+                <span asp-validation-for="ManuCountry" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

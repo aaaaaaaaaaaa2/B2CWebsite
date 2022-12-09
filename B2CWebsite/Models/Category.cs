@@ -1,4 +1,7 @@
-﻿namespace B2CWebsite.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace B2CWebsite.Models;
 
 public partial class Category
 {
@@ -8,24 +11,9 @@ public partial class Category
 
     public string? Description { get; set; }
 
-
-    public int? Levels { get; set; }
-
-    public int? Ordering { get; set; }
-
-    public bool? Published { get; set; }
-
     public string? Thumb { get; set; }
 
     public string? Title { get; set; }
-
-    public string? MetaDesc { get; set; }
-
-    public string? MetaKey { get; set; }
-
-    public string? MetaCover { get; set; }
-
-    public string? MetaSchemeMarkup { get; set; }
 
     public virtual ICollection<Supplement> Supplements { get; } = new List<Supplement>();
 }

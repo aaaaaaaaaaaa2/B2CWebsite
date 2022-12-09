@@ -1,4 +1,7 @@
-﻿namespace B2CWebsite.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace B2CWebsite.Models;
 
 public partial class Customer
 {
@@ -15,6 +18,8 @@ public partial class Customer
     public string? Phone { get; set; }
 
     public string? Password { get; set; }
+
+    public virtual ICollection<Account> Accounts { get; } = new List<Account>();
 
     public virtual ICollection<Order> Orders { get; } = new List<Order>();
 }

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<B2CWebsite.Models.Manufacturer>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ManuName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ManuAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ManuPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ManuEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ManuCountry)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManuName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManuAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManuPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManuEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManuCountry)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ManuId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ManuId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ManuId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,4 +1,7 @@
-﻿namespace B2CWebsite.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace B2CWebsite.Models;
 
 public partial class Manufacturer
 {

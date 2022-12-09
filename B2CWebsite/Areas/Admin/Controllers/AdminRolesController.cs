@@ -6,16 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using B2CWebsite.Models;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace B2CWebsite.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class AdminRolesController : Controller
     {
+        public INotyfService _notifyService { get; }
         private readonly DrugStoreContext _context;
 
-        public AdminRolesController(DrugStoreContext context)
+        public AdminRolesController(DrugStoreContext context, INotyfService notifyService)
         {
+            _notifyService = notifyService ;
             _context = context;
         }
 
@@ -60,6 +63,7 @@ namespace B2CWebsite.Areas.Admin.Controllers
             {
                 _context.Add(role);
                 await _context.SaveChangesAsync();
+                _notifyService.Success("Create Successfully!");
                 return RedirectToAction(nameof(Index));
             }
             return View(role);
@@ -99,11 +103,13 @@ namespace B2CWebsite.Areas.Admin.Controllers
                 {
                     _context.Update(role);
                     await _context.SaveChangesAsync();
+                    _notifyService.Success("Edit Successfully!");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!RoleExists(role.RoleId))
                     {
+                        _notifyService.Success("Error");
                         return NotFound();
                     }
                     else
@@ -150,6 +156,7 @@ namespace B2CWebsite.Areas.Admin.Controllers
             }
             
             await _context.SaveChangesAsync();
+            _notifyService.Success("Delete Successfully!");
             return RedirectToAction(nameof(Index));
         }
 

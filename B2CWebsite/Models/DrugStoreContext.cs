@@ -1,15 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace B2CWebsite.Models;
 
 public partial class DrugStoreContext : DbContext
 {
-    public DrugStoreContext(DbContextOptions<DrugStoreContext> options) : base(options)
+    public DrugStoreContext()
     {
+    }
 
+    public DrugStoreContext(DbContextOptions<DrugStoreContext> options)
+        : base(options)
+    {
     }
 
     public virtual DbSet<Account> Accounts { get; set; }
+
+    public virtual DbSet<Agent> Agents { get; set; }
 
     public virtual DbSet<Category> Categories { get; set; }
 
@@ -23,8 +31,6 @@ public partial class DrugStoreContext : DbContext
 
     public virtual DbSet<Page> Pages { get; set; }
 
-    public virtual DbSet<Price> Prices { get; set; }
-
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<Supplement> Supplements { get; set; }
@@ -32,8 +38,8 @@ public partial class DrugStoreContext : DbContext
     public virtual DbSet<TransactStatus> TransactStatuses { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Data Source=MY-ONLY-REASON\\SQLEXPRESS;Initial Catalog=DrugStore;Integrated Security=False;TrustServerCertificate=True;");
-//TrustServerCertificate=True
+        => optionsBuilder.UseSqlServer("Data Source=MY-ONLY-REASON\\SQLEXPRESS;Initial Catalog=DrugStore;Persist Security Info=True;User ID=sa;Password=1;TrustServerCertificate=True;");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Account>(entity =>
@@ -43,6 +49,7 @@ public partial class DrugStoreContext : DbContext
             entity.Property(e => e.AccountId)
                 .ValueGeneratedNever()
                 .HasColumnName("AccountID");
+
             entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.FullName).HasColumnType("text");
             entity.Property(e => e.Password).HasMaxLength(50);
@@ -51,10 +58,29 @@ public partial class DrugStoreContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.RoleId).HasColumnName("RoleID");
 
+            entity.HasOne(d => d.Customer).WithMany(p => p.Accounts)
+
+                .HasConstraintName("FK_Accounts_Customers");
+
             entity.HasOne(d => d.Role).WithMany(p => p.Accounts)
                 .HasForeignKey(d => d.RoleId)
                 .HasConstraintName("FK__Accounts__RoleID__49C3F6B7");
         });
+
+        modelBuilder.Entity<Agent>(entity =>
+        {
+            entity.HasKey(e => e.AgentId).HasName("PK__Agent__9AC3BFD1C35B1515");
+
+            entity.ToTable("Agent");
+
+            entity.Property(e => e.AgentId)
+                .ValueGeneratedNever()
+                .HasColumnName("AgentID");
+            entity.Property(e => e.AgentAddress).HasColumnType("text");
+            entity.Property(e => e.AgentEmail).HasColumnType("text");
+            entity.Property(e => e.AgentName).HasColumnType("text");
+        });
+
         modelBuilder.Entity<Category>(entity =>
         {
             entity.HasKey(e => e.CatId).HasName("PK__Category__6A1C8ADA87E24470");
@@ -66,11 +92,6 @@ public partial class DrugStoreContext : DbContext
                 .HasColumnName("CatID");
             entity.Property(e => e.CatName).HasColumnType("text");
             entity.Property(e => e.Description).HasColumnType("text");
-            entity.Property(e => e.MetaCover).HasMaxLength(250);
-            entity.Property(e => e.MetaDesc).HasMaxLength(250);
-            entity.Property(e => e.MetaKey).HasMaxLength(250);
-            entity.Property(e => e.MetaSchemeMarkup).HasMaxLength(250);
-            entity.Property(e => e.ParentId).HasColumnName("ParentID");
             entity.Property(e => e.Thumb).HasColumnType("text");
             entity.Property(e => e.Title).HasColumnType("text");
         });
@@ -170,23 +191,6 @@ public partial class DrugStoreContext : DbContext
             entity.Property(e => e.Title).HasMaxLength(250);
         });
 
-        modelBuilder.Entity<Price>(entity =>
-        {
-            entity.HasKey(e => e.PriceId).HasName("PK__Price__4957584FA22168B9");
-
-            entity.ToTable("Price");
-
-            entity.Property(e => e.PriceId)
-                .ValueGeneratedNever()
-                .HasColumnName("PriceID");
-            entity.Property(e => e.Price1).HasColumnName("Price");
-            entity.Property(e => e.Sid).HasColumnName("SID");
-
-            entity.HasOne(d => d.SidNavigation).WithMany(p => p.Prices)
-                .HasForeignKey(d => d.Sid)
-                .HasConstraintName("FK__Price__SID__5CD6CB2B");
-        });
-
         modelBuilder.Entity<Role>(entity =>
         {
             entity.HasKey(e => e.RoleId).HasName("PK__Roles__8AFACE3ADFFAD443");
@@ -219,7 +223,6 @@ public partial class DrugStoreContext : DbContext
             entity.Property(e => e.Sname)
                 .HasColumnType("text")
                 .HasColumnName("SName");
-            entity.Property(e => e.Thumb).HasMaxLength(250);
             entity.Property(e => e.Uses).HasColumnType("text");
             entity.Property(e => e.Warnings).HasColumnType("text");
 
