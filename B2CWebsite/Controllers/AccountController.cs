@@ -22,20 +22,19 @@ namespace B2CWebsite.Controllers
         }
 
 
-        [Route("MyAccount.html", Name = "Dashboard")]
+        [Route("Index.cshtml", Name = "Dashboard")]
         public async Task<IActionResult> Dashboard()
         {
             var allAccount = await _context.Accounts.ToListAsync();
-            var accountID = HttpContext.Session.GetString("CustomerID");
+            var accountID = HttpContext.Session.GetString("AccountId");
             if (accountID != null)
             {
-                var customer = _context.Customers.AsNoTracking().SingleOrDefault(x => x.CustomerId == Convert.ToInt32(accountID));
+                var customer = _context.Accounts.AsNoTracking().SingleOrDefault(x => x.AccountId == Convert.ToInt32(accountID));
                 if (customer != null)
                 {
                     var lsOrder = _context.Orders
                         .Include(x => x.TransactId)
                         .AsNoTracking()
-                        .Where(x => x.CustomerId == customer.CustomerId)
                         .OrderByDescending(x => x.OrderDate)
                         .ToList();
                     ViewBag.DonHang = lsOrder;
@@ -98,7 +97,7 @@ namespace B2CWebsite.Controllers
                 if (ModelState.IsValid)
                 {
                     string salt = Utilities.GetRandomKey();
-                    Customer customer = new Customer
+                    Account customer = new Account
                     {
                         FullName = account.FullName,
                         Phone = account.Phone.Trim().ToLower(),
@@ -109,19 +108,19 @@ namespace B2CWebsite.Controllers
                     {
                         _context.Add(customer);
                         await _context.SaveChangesAsync();
-                        HttpContext.Session.SetString("CustomerId", customer.CustomerId.ToString());
+                        HttpContext.Session.SetString("AccountId", customer.AccountId.ToString());
                         var taikhoanID = HttpContext.Session.GetString("CustomerId");
 
                         var claims = new List<Claim>
                         {
                             new Claim(ClaimTypes.Name,customer.FullName),
-                            new Claim("CustomerId", customer.CustomerId.ToString())
+                            new Claim("AccountId", customer.AccountId.ToString())
                         };
                         ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "login");
                         ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
                         await HttpContext.SignInAsync(claimsPrincipal);
                         _notyfService.Success("Register successfully!");
-                        return RedirectToAction("Dashboard", "Accounts");
+                        return RedirectToAction("Index", "Home");
                     }
                     catch
                     {
@@ -161,25 +160,25 @@ namespace B2CWebsite.Controllers
                     bool isEmail = Utilities.IsValidEmail(customer1.UserName);
                     if (!isEmail) return View(customer1);
 
-                    var customer = _context.Customers.AsNoTracking().SingleOrDefault(x => x.Email.Trim() == customer1.UserName);
+                    var customer = _context.Accounts.AsNoTracking().SingleOrDefault(x => x.Email.Trim() == customer1.UserName);
 
                     //Luu Session MaKh
-                    HttpContext.Session.SetString("CustomerId", customer.CustomerId.ToString());
+                    HttpContext.Session.SetString("AccountId", customer.AccountId.ToString());
                     var taikhoanID = HttpContext.Session.GetString("CustomerId");
 
                     //Identity
                     var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, customer.FullName),
-                        new Claim("CustomerId", customer.CustomerId.ToString())
+                        new Claim("AccountId", customer.AccountId.ToString())
                     };
                     ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "login");
                     ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
                     await HttpContext.SignInAsync(claimsPrincipal);
                     _notyfService.Success("Login Success");
                     if (string.IsNullOrEmpty(returnUrl))
-                    {
-                        return RedirectToAction("Dashboard", "Accounts");
+                    {   
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {
@@ -192,6 +191,14 @@ namespace B2CWebsite.Controllers
                 return RedirectToAction("Register", "Accounts");
             }
             return View(customer1);
+        }
+        [HttpGet]
+        [Route("logout.html", Name = "Logout")]
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync();
+            HttpContext.Session.Remove("CustomerId");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
