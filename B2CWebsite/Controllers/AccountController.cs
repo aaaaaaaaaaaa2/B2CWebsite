@@ -109,7 +109,7 @@ namespace B2CWebsite.Controllers
                         _context.Add(customer);
                         await _context.SaveChangesAsync();
                         HttpContext.Session.SetString("AccountId", customer.AccountId.ToString());
-                        var taikhoanID = HttpContext.Session.GetString("CustomerId");
+                        var taikhoanID = HttpContext.Session.GetString("AccountId");
 
                         var claims = new List<Claim>
                         {

@@ -9,14 +9,14 @@ namespace B2CWebsite.ModelViews
     {
         [Key]
         [MaxLength(100)]
-        [Required(ErrorMessage = ("Vui lòng nhập Email"))]
-        [Display(Name = "Địa chỉ Email")]
-        [EmailAddress(ErrorMessage = "Sai định dạng Email")]
+        [Required(ErrorMessage = ("Please enter your email"))]
+        [Display(Name = "Email")]
+        [EmailAddress(ErrorMessage = "Not Email Format")]
         public string UserName { get; set; }
 
-        [Display(Name = "Mật khẩu")]
-        [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
-        [MinLength(5, ErrorMessage = "Bạn cần đặt mật khẩu tối thiểu 5 ký tự")]
+        [Display(Name = "Password")]
+        [Required(ErrorMessage = "Please enter your password")]
+        [MinLength(3, ErrorMessage = "You must enter at least 3 characters")]
         public string Password { get; set; }
     }
 }

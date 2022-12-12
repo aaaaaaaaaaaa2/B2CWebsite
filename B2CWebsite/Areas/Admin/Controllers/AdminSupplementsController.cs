@@ -57,8 +57,6 @@ namespace B2CWebsite.Areas.Admin.Controllers
         }
 
         // POST: Admin/AdminSupplements/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Sid,Sname,Image,ManuId,CatId,Uses,Ingredient,Directions,Warnings,OtherInfo,InactiveIngredient,Price")] Supplement supplement)

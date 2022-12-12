@@ -14,7 +14,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>Admin Area</title>
 
     <meta name="description" content="" />
 
@@ -59,7 +59,7 @@
         <!-- Menu -->
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
-            <a href="index.html" class="app-brand-link">
+            <a asp-area="Admin"asp-controller="Home" asp-action="Index" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <svg
                   width="25"
@@ -115,7 +115,7 @@
                   </g>
                 </svg>
               </span>
-              <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+              <span class="app-brand-text demo menu-text fw-bolder ms-2">Admin</span>
             </a>
 
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -200,11 +200,11 @@
               </a>
             </li>
             <!-- Customer -->
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">Customer</span></li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Agent</span></li>
             <li class="menu-item">
               <a asp-area="Admin" asp-controller="AdminCustomers" asp-action="Index" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-support"></i>
-                <div data-i18n="Support">Customer management</div>
+                <div data-i18n="Support">Agent management</div>
               </a>
             </li>
           </ul>
